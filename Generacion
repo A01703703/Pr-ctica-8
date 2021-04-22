@@ -1,0 +1,159 @@
+generacion_PWM:
+
+   process( Clock50, selectorPosicion,PWM_Count,Contador)
+
+                     constant pos1: integer := 50000;  --representa a 1.00ms = 0°
+
+                     constant pos2: integer := 62500;  --representa a 1.25ms = 45°
+
+                   
+
+                     
+
+          begin
+
+             
+
+                     case (selectorPosicion) is
+
+                                 when "000" =>--con el selector en 00 se posiciona en servo en 0°
+						
+						if (Contador2=1) then
+						PWM_Count<=1;
+						Contador2<=2;
+						end if;
+						if   rising_edge(Clock50) then 
+							if Contador=1 then
+								PWM_Count <= PWM_Count + 1;
+
+							else PWM_Count <= 1;
+							
+								PWM<='0';
+							end if;
+
+            					 end if;
+
+                                             if ((PWM_Count < pos1) and (Contador=1)) then PWM <= '1';
+
+	                                             else                                        
+							PWM <= '0';
+			               			Contador <= 2;
+							
+
+                                             end if;
+
+                                 when "001" =>-- con el selector en 01 se posiciona en servo en 45°
+						if (Contador2=2) then
+						PWM_Count<=1;
+						Contador2<=3;
+						end if;
+						if   rising_edge(Clock50) then 
+							if (Contador)=2 then
+								PWM_Count <= PWM_Count + 1;
+
+							else PWM_Count <= 1;
+							
+								PWM<='0';
+							end if;
+
+            					 end if;
+
+                                             if ((PWM_Count < pos2) and (Contador=2)) then PWM <= '1';
+
+	                                             else                                        
+							PWM <= '0';
+			               			Contador <= 3;
+							
+
+                                             end if;
+	
+                                             
+                                 when "010" =>-- con el selector en 11 se posiciona en servo en 90°
+
+                                          if (Contador2=3) then
+						PWM_Count<=1;
+						Contador2<=4;
+						end if;
+						if   rising_edge(Clock50) then 
+							if Contador=3 then
+								PWM_Count <= PWM_Count + 1;
+
+							else PWM_Count <= 1;
+							
+								PWM<='0';
+							end if;
+
+            					 end if;
+
+                                             if ((PWM_Count < pos2) and (Contador=3)) then PWM <= '1';
+
+	                                             else                                        
+							PWM <= '0';
+			               			Contador <= 4;
+							
+
+                                             end if;
+	
+	
+				when "011" =>-- con el selector en 11 se posiciona en servo en 135°
+
+                                            if (Contador2=4) then
+						PWM_Count<=1;
+						Contador2<=5;
+						end if;
+						if   rising_edge(Clock50) then 
+							if Contador=4 then
+								PWM_Count <= PWM_Count + 1;
+
+							else PWM_Count <= 1;
+							
+								PWM<='0';
+							end if;
+
+            					 end if;
+
+                                             if ((PWM_Count < pos2) and (Contador=4)) then PWM <= '1';
+
+	                                             else                                        
+							PWM <= '0';
+			               			Contador <= 5;
+							
+
+                                             end if;
+	
+
+                                 when "100" =>-- con el selector en 10 se posiciona en servo en 180°
+
+                                            if (Contador2=5) then
+						PWM_Count<=1;
+						Contador2<=1;
+						end if;
+						if   rising_edge(Clock50) then 
+							if Contador=5 then
+								PWM_Count <= PWM_Count + 1;
+
+							else PWM_Count <= 1;
+							
+								PWM<='0';
+							end if;
+
+            					 end if;
+
+                                             if ((PWM_Count < pos2) and (Contador=5)) then PWM <= '1';
+
+	                                             else                                        
+							PWM <= '0';
+			               			Contador <= 1;
+							
+
+                                             end if;
+	
+	
+
+                                 when others => null;
+
+                     end case;
+
+          end process generacion_PWM;
+
+end behavioral;
